@@ -20,7 +20,7 @@ function parse(s){
 
     const singleCharSymbols = ['+', '-', '/', '*', '^', '(', ')']
     const longSymbols = ['log', 'exp', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan']
-    const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
     const variable = 'x';
 
 
@@ -45,14 +45,23 @@ function parse(s){
                 }
             }
             let num = 0;
-            for(let k = 0; k < numLength; k++){
-                num += parseInt(s[i+k]) * Math.pow(10, numLength - k - 1);
+            // parse the number
+            let substr = s.substring(i, i+numLength);
+            console.log(`substring: ${substr}`);
+            if(substr.includes(".")){
+                num = parseFloat(substr);
+            }
+            else{
+                num = parseInt(substr);
             }
             tokens.push(num);
             i += numLength - 1;
         }
         longSymbols.forEach((t) => {
-            if(s.indexOf(t) == i) tokens.push(t);
+            if(s.indexOf(t) == i) {
+                tokens.push(t);
+                i += t.length - 1;
+            }
         });
     }
 
@@ -74,43 +83,12 @@ function parse(s){
         }
     }
 
-    console.log(tokens.join(''));
+    // need to (recursively?) consolidate expressions within parentheses
 
-    return eval(`((x) => {${tokens.join('')}})`)
-
-
-    // 
-    // TWO-STACKS ALOGORITHM
-    //
-    // // create number and operator stacks
-    // let numStack = [];
-    // let opStack = [];
-
-    // tokens.forEach((t) => {
-    //     if(typeof(t) == "number"){
-    //         numStack.push(t)
-    //     }
-    //     else{
-    //         opStack.push(t);
-    //     }
-    // });
-
-    // console.log(numStack);
-    // console.log(opStack);
-
-    // // create eval tree
-    // let evalTree = new BinaryTree();
-
-    // // recursively evaluate with that one algorithm that I forgot half of
-    // function evaluate(onNumStack){
-    //     let item;
-    //     if(onNumStack){
-    //         item = numStack.pop();
-    //     }
-    //     else{
-    //         item = opStack.pop();
-    //     }
-    // }
-
-    // evaluate(true);
+    try{
+        return eval(`(x => ${tokens.join('')})`)
+    }
+    catch(e){
+        return null;
+    }
 }

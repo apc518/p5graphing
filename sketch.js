@@ -93,4 +93,9 @@ function draw(){
     }
 }
 
-const inputElem = document.getElementById("expression")
+let elem = document.getElementById("expression");
+
+elem.oninput = (e) => {
+    let f = parse(elem.value);
+    if(f) userFunction = f;
+};
