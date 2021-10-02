@@ -1,4 +1,4 @@
-let resolution = 500;
+let resolution = 1000;
 let xRange = 50;
 let yRange = 50;
 let centerPoint = {
@@ -60,6 +60,17 @@ function keyPressed(){
     }
 }
 
+function mouseWheel(e){
+    if(Math.sign(e.delta) < 0){
+        xRange /= 1.5;
+        yRange /= 1.5;
+    }
+    else{
+        xRange *= 1.5;
+        yRange *= 1.5;
+    }
+}
+
 function draw(){
     background(30, 30, 40);
     noFill();
@@ -72,7 +83,7 @@ function draw(){
     
     // function
     stroke(255);
-    strokeWeight(3);
+    strokeWeight(2);
     if(userFunction){
         for(let i = 0; i < resolution; i++){
             let x0 = xInput(i / resolution);
