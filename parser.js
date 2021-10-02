@@ -12,16 +12,17 @@ class BinaryTree{
     }
 }
 
+const singleCharSymbols = ['+', '-', '/', '*', '^', '(', ')']
+const longSymbols = ['log', 'exp', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan']
+const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
+const variable = 'x';
+
 function parse(s){
     // takes an arithmetic expression s and returns the function defined.
     // the accepted alphabet is fairly limited:
     // parentheses, integers, decimals, and the following symbols:
     // +, -, /, *, ^, log, sin, cos, tan, asin, acos, atan, and exp
 
-    const singleCharSymbols = ['+', '-', '/', '*', '^', '(', ')']
-    const longSymbols = ['log', 'exp', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan']
-    const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
-    const variable = 'x';
 
 
     // tokenize
@@ -66,6 +67,17 @@ function parse(s){
     }
 
     // console.log(tokens);
+
+    // check for anything that isnt a single character symbol
+    // that comes immediately after a variable
+    for(let i = 0; i < tokens.length; i++){
+        if(tokens[i] === variable){
+            if(tokens.length <= i+1) break; // last token is the variable
+            let c = tokens[i+1];
+            if(singleCharSymbols.indexOf(c) < 0) return null;
+        }
+    }
+
 
     for (let i = 0; i < tokens.length; i++) {
         const element = tokens[i];
