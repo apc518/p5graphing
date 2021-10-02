@@ -12,12 +12,15 @@ let mouseInit = {
     centerY: centerPoint.y
 }
 
+let elem = document.getElementById("expression");
+
+elem.oninput = (e) => {
+    let f = parse(elem.value);
+    if(f) userFunction = f;
+};
+
 function userFunction(x){
     return x*x;
-}
-
-function graph(fn){
-    userFunction = fn;
 }
 
 function xInput(portion){
@@ -83,7 +86,7 @@ function draw(){
     
     // function
     stroke(255);
-    strokeWeight(2);
+    strokeWeight(3);
     if(userFunction){
         for(let i = 0; i < resolution; i++){
             let x0 = xInput(i / resolution);
@@ -98,15 +101,8 @@ function draw(){
     }
 
     // dragging the graph around
-    if(mouseIsPressed){
+    if(mouseIsPressed && document.activeElement !== elem){
         centerPoint.x = mouseInit.centerX + mouseX - mouseInit.x;
         centerPoint.y = mouseInit.centerY + mouseY - mouseInit.y;
     }
 }
-
-let elem = document.getElementById("expression");
-
-elem.oninput = (e) => {
-    let f = parse(elem.value);
-    if(f) userFunction = f;
-};
