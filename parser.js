@@ -47,7 +47,7 @@ function parse(s){
             let num = 0;
             // parse the number
             let substr = s.substring(i, i+numLength);
-            console.log(`substring: ${substr}`);
+            // console.log(`substring: ${substr}`);
             if(substr.includes(".")){
                 num = parseFloat(substr);
             }
@@ -65,7 +65,7 @@ function parse(s){
         });
     }
 
-    console.log(tokens);
+    // console.log(tokens);
 
     for (let i = 0; i < tokens.length; i++) {
         const element = tokens[i];
@@ -82,8 +82,6 @@ function parse(s){
             tokens[i+1] = `${tokens[i+1]})`
         }
     }
-
-    // need to (recursively?) consolidate expressions within parentheses
 
     try{
         return eval(`(x => ${tokens.join('')})`)
