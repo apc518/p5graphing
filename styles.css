@@ -2,3 +2,30 @@ body{
     margin: 0;
     overflow: hidden;
 }
+
+#expression{
+    /* positioning */
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    
+    /* size */
+    height: 30px;
+    width: 200px;
+    font-size: 24px;
+
+    /* border */
+    border: none;
+    outline: #666 solid 2px;
+
+    transition-property: outline;
+    transition-duration: 0.2s;
+    
+    /* coloring */
+    background-color: #333;
+    color: #ccc;
+}
+
+#expression:focus-visible{
+    outline: #ccc solid 2px;
+}
