@@ -14,6 +14,9 @@ let mouseInit = {
 
 let elem = document.getElementById("expression");
 
+let canvasWidth;
+let canvasHeight;
+
 elem.oninput = (e) => {
     let f = parse(elem.value);
     if(f) userFunction = f;
@@ -26,20 +29,22 @@ function userFunction(x){
 function xInput(portion){
     // takes portion across the screen (0 to 1)
     // returns the x value that should be inputted there
-    let pixel = portion * windowWidth;
+    let pixel = portion * canvasWidth;
     let delta = pixel - centerPoint.x;
-    return xRange * delta / windowWidth;
+    return xRange * delta / canvasWidth;
 }
 
 function setup(){
     createCanvas(windowWidth, windowHeight);
-    centerPoint.x = windowWidth / 2;
-    centerPoint.y = windowHeight / 2;
+    canvasWidth = windowWidth;
+    canvasHeight = windowHeight;
+    centerPoint.x = canvasWidth / 2;
+    centerPoint.y = canvasHeight / 2;
 }
 
-function windowResized(){
-    resizeCanvas(windowWidth, windowHeight);
-}
+// function windowResized(){
+//     resizeCanvas(canvasWidth, canvasHeight);
+// }
 
 function mousePressed(){
     // set up for dragging the graph around
@@ -92,10 +97,10 @@ function draw(){
             let x0 = xInput(i / resolution);
             let x1 = xInput((i+1) / resolution);
             line(
-                i * windowWidth / resolution,
-                centerPoint.y - (windowHeight / yRange) * userFunction(x0),
-                (i+1) * windowWidth / resolution,
-                centerPoint.y - (windowHeight / yRange) * userFunction(x1),
+                i * canvasWidth / resolution,
+                centerPoint.y - (canvasHeight / yRange) * userFunction(x0),
+                (i+1) * canvasWidth / resolution,
+                centerPoint.y - (canvasHeight / yRange) * userFunction(x1),
             );
         }
     }
